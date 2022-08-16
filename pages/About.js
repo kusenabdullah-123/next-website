@@ -1,21 +1,16 @@
 import Navbar from "../component/navbar";
-export default function Home() {
+function About(props) {
   return (
     <div>
       <header className="site-header sticky-top py-1">
+        {/* component navbar */}
         <Navbar />
       </header>
       <main>
         <div className="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
           <div className="col-md-5 p-lg-5 mx-auto my-5">
-            <h1 className="display-4 fw-normal">KStore</h1>
-            <p className="lead fw-normal">
-              And an even wittier subheading to boot. Jumpstart your marketing
-              efforts with this example based on Apple’s marketing pages.
-            </p>
-            <a className="btn btn-outline-secondary" href="#">
-              Coming soon
-            </a>
+            <h1 className="display-4 fw-normal">About KStore</h1>
+            <p className="lead fw-normal">{props.quote}</p>
           </div>
           <div className="product-device shadow-sm d-none d-md-block" />
           <div className="product-device product-device-2 shadow-sm d-none d-md-block" />
@@ -277,4 +272,14 @@ export default function Home() {
       </footer>
     </div>
   );
+}
+
+export default About;
+
+export async function getServerSideProps(context) {
+  const response = await fetch("https://dummyjson.com/quotes/2");
+  const json = await response.json();
+  return {
+    props: { quote: json.quote }, // will be passed to the page component as props
+  };
 }
